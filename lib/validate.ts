@@ -20,9 +20,6 @@ export function normalizeSigner(input: Signer): Signer {
     city: cleanLine(input.city),
     email: cleanLine(input.email),
     phone: cleanLine(input.phone),
-    studyType: cleanLine(input.studyType),
-    studyRef: cleanLine(input.studyRef),
-    amountHt: cleanLine(input.amountHt),
   };
 }
 
@@ -95,33 +92,6 @@ export function validateSigner(input: Signer): FieldErrors {
   if (input.phone.length > 30 || phoneDigits.length < 10) {
     errors.phone = "Indiquez un numéro de téléphone valide.";
   }
-
-  const studyType = checkLength(
-    input.studyType,
-    2,
-    120,
-    "Indiquez le type d'étude.",
-    "Le type d'étude est trop long.",
-  );
-  if (studyType) errors.studyType = studyType;
-
-  const studyRef = checkLength(
-    input.studyRef,
-    2,
-    40,
-    "Indiquez la référence de l'étude.",
-    "La référence est trop longue.",
-  );
-  if (studyRef) errors.studyRef = studyRef;
-
-  const amountHt = checkLength(
-    input.amountHt,
-    2,
-    180,
-    "Indiquez le montant HT, en chiffres et en lettres.",
-    "Le montant est trop long.",
-  );
-  if (amountHt) errors.amountHt = amountHt;
 
   return errors;
 }

@@ -1,6 +1,14 @@
 import type { ContractContent, Owner, Signer } from "@/lib/types";
 
 /**
+ * Mentions commerciales, renseignées par Neoma Conseil.
+ * Le client ne les saisit pas. Laisser vide pour renvoyer au devis accepté.
+ */
+const STUDY_TYPE = "";
+const STUDY_REF = "";
+const AMOUNT_HT = "";
+
+/**
  * Convention d'étude Neoma Conseil.
  * Le texte suit le modèle « Template Convention d'Etude 2025 ».
  * Les champs du signataire remplacent les mentions variables du modèle.
@@ -8,11 +16,18 @@ import type { ContractContent, Owner, Signer } from "@/lib/types";
 export function renderContract(signer: Signer, owner: Owner): ContractContent {
   const clientName = `${signer.firstName} ${signer.lastName}`;
   const clientPlace = `${signer.address}, ${signer.postalCode} ${signer.city}`;
+  const title = STUDY_TYPE ? `Convention d'étude - ${STUDY_TYPE}` : "Convention d'étude";
+  const referenceSentence = STUDY_REF
+    ? `comme défini dans la Convention d'étude ${STUDY_REF}.`
+    : "comme défini dans la présente Convention d'étude.";
+  const priceSentence = AMOUNT_HT
+    ? `est fixé d'un commun accord à ${AMOUNT_HT} HT.`
+    : "est fixé d'un commun accord dans le devis accepté par le Client.";
 
   return {
-    title: `Convention d'étude - ${signer.studyType}`,
+    title,
     intro: [
-      `Référence : ${signer.studyRef}`,
+      ...(STUDY_REF ? [`Référence : ${STUDY_REF}`] : []),
       "Entre les soussignés :",
       [
         signer.company,
@@ -33,9 +48,7 @@ export function renderContract(signer: Signer, owner: Owner): ContractContent {
         `email : ${owner.email}`,
         "d'autre part,",
       ].join("\n"),
-      "Il a été préalablement rappelé que Neoma Conseil est une Junior-Entreprise commerciale composée uniquement d'élèves de NEOMA Business School, et membre de la Confédération Nationale des Junior-Entreprises. Elle a pour vocation de compléter la formation théorique dispensée dans son établissement d'enseignement supérieur par des applications pratiques à vocation pédagogique dans un contexte professionnel. C'est dans cet esprit que le Client a confié à Neoma Conseil la réalisation de l'étude définie ci-dessous. La présente Convention a pour objet de définir les obligations réciproques des parties et de préciser les modalités d'exécution de l'étude, comme défini dans la Convention d'étude " +
-        signer.studyRef +
-        ".",
+      `Il a été préalablement rappelé que Neoma Conseil est une Junior-Entreprise commerciale composée uniquement d'élèves de NEOMA Business School, et membre de la Confédération Nationale des Junior-Entreprises. Elle a pour vocation de compléter la formation théorique dispensée dans son établissement d'enseignement supérieur par des applications pratiques à vocation pédagogique dans un contexte professionnel. C'est dans cet esprit que le Client a confié à Neoma Conseil la réalisation de l'étude définie ci-dessous. La présente Convention a pour objet de définir les obligations réciproques des parties et de préciser les modalités d'exécution de l'étude, ${referenceSentence}`,
       "Il a été convenu et arrêté ce qui suit :",
     ],
     articles: [
@@ -57,7 +70,7 @@ export function renderContract(signer: Signer, owner: Owner): ContractContent {
       },
       {
         title: "Article 5 - Budget",
-        body: `Le prix de l'étude réalisée par Neoma Conseil dans le cadre de la présente Convention d'étude est fixé d'un commun accord à ${signer.amountHt} HT. Les frais engagés pour la réalisation des prestations feront l'objet d'une facturation au forfait. Le montant du forfait est précisé dans le budget et déterminé d'un commun accord par les parties.`,
+        body: `Le prix de l'étude réalisée par Neoma Conseil dans le cadre de la présente Convention d'étude ${priceSentence} Les frais engagés pour la réalisation des prestations feront l'objet d'une facturation au forfait. Le montant du forfait est précisé dans le budget et déterminé d'un commun accord par les parties.`,
       },
       {
         title: "Article 6 - Conditions de paiement",

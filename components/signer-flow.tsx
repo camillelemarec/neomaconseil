@@ -23,9 +23,6 @@ const EMPTY_SIGNER: Signer = {
   city: "",
   email: "",
   phone: "",
-  studyType: "",
-  studyRef: "",
-  amountHt: "",
 };
 
 async function postSignature(body: {

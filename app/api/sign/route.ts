@@ -28,10 +28,7 @@ function isSigner(value: unknown): value is Signer {
     typeof candidate.postalCode === "string" &&
     typeof candidate.city === "string" &&
     typeof candidate.email === "string" &&
-    typeof candidate.phone === "string" &&
-    typeof candidate.studyType === "string" &&
-    typeof candidate.studyRef === "string" &&
-    typeof candidate.amountHt === "string"
+    typeof candidate.phone === "string"
   );
 }
 

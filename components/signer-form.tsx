@@ -18,16 +18,9 @@ const PERSON_FIELDS = [
   { name: "phone", label: "Téléphone", autoComplete: "tel", type: "tel" },
 ] as const;
 
-const STUDY_FIELDS = [
-  { name: "studyType", label: "Type d'étude", autoComplete: "off", type: "text" },
-  { name: "studyRef", label: "Référence de l'étude", autoComplete: "off", type: "text" },
-  { name: "amountHt", label: "Montant HT (chiffres et lettres)", autoComplete: "off", type: "text" },
-] as const;
-
 type FieldName =
   | (typeof COMPANY_FIELDS)[number]["name"]
-  | (typeof PERSON_FIELDS)[number]["name"]
-  | (typeof STUDY_FIELDS)[number]["name"];
+  | (typeof PERSON_FIELDS)[number]["name"];
 
 type Props = {
   values: Signer;
@@ -79,18 +72,6 @@ export function SignerForm({ values, errors, onChange, onSubmit }: Props) {
         ))}
       </FieldGroup>
 
-      <FieldGroup title="L'étude">
-        {STUDY_FIELDS.map((field) => (
-          <Field
-            key={field.name}
-            {...field}
-            value={values[field.name]}
-            error={errors[field.name]}
-            onChange={(value) => onChange(field.name, value)}
-          />
-        ))}
-      </FieldGroup>
-
       <button
         type="submit"
         className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#0e2e4e] px-6 text-sm font-medium text-white sm:w-auto"
@@ -127,14 +108,7 @@ function Field({
   error?: string;
   onChange: (value: string) => void;
 }) {
-  const hint =
-    name === "siret"
-      ? "14 chiffres, sans espace."
-      : name === "studyRef"
-        ? "Par exemple CE/4NC01RS."
-        : name === "amountHt"
-          ? "Par exemple 4 800 euros (quatre mille huit cents euros)."
-          : null;
+  const hint = name === "siret" ? "14 chiffres, sans espace." : null;
 
   return (
     <div className="space-y-1.5">
@@ -148,7 +122,7 @@ function Field({
         autoComplete={autoComplete}
         inputMode={name === "siret" || name === "postalCode" ? "numeric" : name === "phone" ? "tel" : undefined}
         autoCapitalize={name === "email" || name === "siret" ? "none" : undefined}
-        spellCheck={name === "email" || name === "siret" || name === "studyRef" ? false : undefined}
+        spellCheck={name === "email" || name === "siret" ? false : undefined}
         value={value}
         aria-invalid={error ? true : undefined}
         onChange={(event) => onChange(event.target.value)}

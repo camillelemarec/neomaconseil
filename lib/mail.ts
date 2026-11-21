@@ -43,8 +43,6 @@ export async function sendSignedContract(input: {
     `Adresse : ${signer.address}, ${signer.postalCode} ${signer.city}`,
     `Email : ${signer.email}`,
     `Téléphone : ${signer.phone}`,
-    `Étude : ${signer.studyType} (${signer.studyRef})`,
-    `Montant HT : ${signer.amountHt}`,
     `Date : ${input.signedAtLabel}`,
     "",
     "Le PDF est joint à ce message.",
@@ -54,7 +52,7 @@ export async function sendSignedContract(input: {
     from,
     to,
     replyTo: signer.email,
-    subject: `Convention signée - ${signer.studyRef} - ${signer.company}`,
+    subject: `Convention signée - ${signer.company}`,
     text,
     attachments: [
       {

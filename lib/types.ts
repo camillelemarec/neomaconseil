@@ -9,9 +9,6 @@ export type Signer = {
   city: string;
   email: string;
   phone: string;
-  studyType: string;
-  studyRef: string;
-  amountHt: string;
 };
 
 export type Owner = {
