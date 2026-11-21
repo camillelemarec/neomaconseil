@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Convention d'étude
 
-## Getting Started
+Page publique de signature de la convention d'étude Neoma Conseil. La personne ouvre le lien du site, remplit ses informations, relit la convention, signe, puis télécharge son PDF. Le même PDF est envoyé à Neoma Conseil.
 
-First, run the development server:
+## Configuration
+
+1. Installer les dépendances :
+
+```bash
+npm install
+cp .env.example .env.local
+```
+
+2. Renseigner le SMTP dans `.env.local` pour que le PDF parte par email. Sans ces valeurs, le signataire peut quand même télécharger sa copie.
+
+   - **Brevo** (300 emails par jour) : hôte `smtp-relay.brevo.com`, port `587`.
+   - **Gmail** : hôte `smtp.gmail.com`, port `587`, avec un mot de passe d'application.
+
+3. Lancer l'application :
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Mise en ligne
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Le plan gratuit de Vercel suffit. Importer le dépôt GitHub, recopier les variables de `.env.local`, puis partager l'adresse du site :
 
-## Learn More
+```text
+https://<domaine>
+```
 
-To learn more about Next.js, take a look at the following resources:
+Le texte de la convention est dans [`lib/contract.ts`](lib/contract.ts).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Limite
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+La signature est une signature manuscrite horodatée (heure de Paris). Ce n'est pas une signature électronique qualifiée au sens du règlement eIDAS.
