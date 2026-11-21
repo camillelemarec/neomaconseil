@@ -11,10 +11,10 @@ npm install
 cp .env.example .env.local
 ```
 
-2. Renseigner le SMTP dans `.env.local` pour que le PDF parte par email. Sans ces valeurs, le signataire peut quand même télécharger sa copie.
+2. Renseigner uniquement l'email et le SMTP dans `.env.local`. Le nom, la fonction, la société et l'adresse sont dans [`lib/owner.ts`](lib/owner.ts). Sans SMTP, le signataire peut quand même télécharger sa copie.
 
-   - **Brevo** (300 emails par jour) : hôte `smtp-relay.brevo.com`, port `587`.
    - **Gmail** : hôte `smtp.gmail.com`, port `587`, avec un mot de passe d'application.
+   - **Brevo** (300 emails par jour) : hôte `smtp-relay.brevo.com`, port `587`.
 
 3. Lancer l'application :
 
@@ -26,11 +26,18 @@ Ouvrir [http://localhost:3000](http://localhost:3000).
 
 ## Mise en ligne
 
-Le plan gratuit de Vercel suffit. Importer le dépôt GitHub, recopier les variables de `.env.local`, puis partager l'adresse du site :
+GitHub Pages (`github.io`) affiche des fichiers statiques. Cette application a besoin d'un serveur pour créer le PDF et envoyer l'email, donc une adresse `github.io` ne peut pas faire signer.
 
-```text
-https://<domaine>
-```
+Les secrets à créer dans le dépôt (Settings, Secrets and variables, Actions) sont seulement :
+
+- `OWNER_EMAIL`
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_USER`
+- `SMTP_PASS`
+- `SMTP_FROM`
+
+Le nom du signataire Neoma Conseil n'en fait pas partie.
 
 Le texte de la convention est dans [`lib/contract.ts`](lib/contract.ts).
 
